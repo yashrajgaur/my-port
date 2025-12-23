@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yashraj Gaur | Senior SMM Specialist (Festive Edition)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Mountains+of+Christmas:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* --- GLOBAL VARIABLES & RESET --- */
+        :root {
+            --bg-color: #0a0a0a;
+            --text-color: #f0f0f0;
+            /* Xmas Palette */
+            --accent-red: #D42426; 
+            --accent-green: #165B33;
+            --accent-gold: #FFD700; 
+            --secondary-bg: #111812; /* Slightly greener dark bg */
+            --card-bg: #1a1a1a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        /* Festive Headers */
+        h1, h2, h3, .logo {
+            font-family: 'Mountains of Christmas', cursive;
+            letter-spacing: 2px;
+        }
+
+        body { 
+            background-color: var(--bg-color); 
+            color: var(--text-color); 
+            line-height: 1.6; 
+            overflow-x: hidden; /* Prevent scrollbar from snow */
+        }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        ul { list-style: none; }
+
+        /* --- SNOW EFFECT CONTAINER --- */
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+        }
+        .snowflake {
+            position: absolute;
+            color: #fff;
+            font-size: 1em;
+            opacity: 0.8;
+        }
+
+        /* --- LAYOUT UTILITIES --- */
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 2; }
+        section { padding: 80px 0; position: relative; }
+        
+        /* --- HEADER WITH XMAS LIGHTS --- */
+        header {
+            position: fixed; width: 100%; top: 0; 
+            background: rgba(10, 10, 10, 0.95);
+            padding: 15px 0; z-index: 1000; 
+            border-bottom: 3px solid var(--accent-red);
+            box-shadow: 0 5px 15px rgba(212, 36, 38, 0.3);
+        }
+        /* The lights */
+        header::before {
+            content: '';
+            position: absolute;
+            top: -5px; left: 0; width: 100%; height: 10px;
+            background-image: radial-gradient(circle, var(--accent-gold) 30%, transparent 40%),
+                              radial-gradient(circle, var(--accent-red) 30%, transparent 40%),
+                              radial-gradient(circle, var(--accent-green) 30%, transparent 40%);
+            background-size: 30px 30px;
+            background-position: 0 0, 10px 0, 20px 0;
+            background-repeat: repeat-x;
+            animation: twinkle 1.5s infinite alternate;
+        }
+        @keyframes twinkle {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; filter: brightness(1.5); }
+        }
+
+        .nav-flex { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: bold; color: var(--accent-gold); text-shadow: 0 0 5px var(--accent-red); }
+        .nav-links a { margin-left: 30px; font-size: 1rem; font-weight: 500; }
+        .nav-links a:hover { color: var(--accent-gold); text-shadow: 0 0 10px var(--accent-red); }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            text-align: center; 
+            background: radial-gradient(circle at center, #2a0a0a 0%, #0a0a0a 100%); /* Reddish dark tint */
+        }
+        .hero h1 { font-size: 4rem; margin-bottom: 20px; line-height: 1.2; }
+        .hero h1 span { 
+            color: var(--accent-red); 
+            text-shadow: 0 0 10px var(--accent-red), 0 0 20px var(--accent-red);
+        }
+        .hero p { font-size: 1.2rem; color: #ccc; max-width: 600px; margin: 0 auto 30px; }
+        
+        /* Xmas Button */
+        .btn {
+            display: inline-block; padding: 12px 30px; 
+            background: var(--accent-red);
+            color: #fff; font-weight: bold; border-radius: 5px; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 0 15px rgba(212, 36, 38, 0.5);
+            border: 2px solid var(--accent-gold);
+            position: relative; overflow: hidden;
+        }
+        .btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6); 
+            background: var(--accent-green);
+        }
+
+        /* --- STATS GRID --- */
+        .stats { background: var(--secondary-bg); padding: 40px 0; border-top: 2px solid var(--accent-green); border-bottom: 2px solid var(--accent-green); }
+        .stats-grid { display: flex; justify-content: space-around; flex-wrap: wrap; text-align: center; }
+        .stat-item { padding: 20px; border-radius: 10px; transition: 0.3s; }
+        .stat-item:hover { background: rgba(255,255,255,0.05); box-shadow: 0 0 20px rgba(255, 215, 0, 0.2) inset; }
+        .stat-item h3 { font-size: 3rem; color: var(--accent-gold); margin-bottom: 5px; text-shadow: 0 0 10px rgba(212, 36, 38, 0.5); }
+        .stat-item p { color: #aaa; text-transform: uppercase; font-size: 0.85rem; letter-spacing: 1px; }
+
+        /* --- SKILLS --- */
+        .skills h2 { text-align: center; font-size: 3rem; margin-bottom: 50px; color: var(--accent-red); }
+        .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .skill-card { 
+            background: var(--card-bg); padding: 30px; border-radius: 10px; 
+            border: 1px solid #333; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+        .skill-card:hover {
+            border-color: var(--accent-gold);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+        }
+        .skill-card h3 { margin-bottom: 15px; color: var(--accent-green); font-size: 1.8rem; }
+        .skill-card ul li { margin-bottom: 10px; padding-left: 25px; position: relative; color: #ccc; }
+        /* Star bullet point */
+        .skill-card ul li::before { 
+            content: "★"; 
+            position: absolute; left: 0; color: var(--accent-gold); top: 2px;
+            text-shadow: 0 0 5px var(--accent-gold);
+        }
+
+        /* --- EXPERIENCE (Candy Cane Theme) --- */
+        .experience { background: var(--secondary-bg); }
+        .experience h2 { text-align: center; font-size: 3rem; margin-bottom: 50px; color: var(--accent-red); }
+        .timeline-item { 
+            display: flex; flex-direction: column; 
+            /* Candy Cane Border */
+            border-left: 5px solid transparent;
+            background-image: linear-gradient(135deg, var(--accent-red) 25%, #fff 25%, #fff 50%, var(--accent-red) 50%, var(--accent-red) 75%, #fff 75%, #fff);
+            background-size: 20px 30px;
+            background-repeat: repeat-y;
+            background-position: 0 0;
+            
+            padding-left: 30px; margin-bottom: 50px; position: relative; 
+        }
+        .timeline-item::before {
+            /* Ornament Dot */
+            content: ""; position: absolute; left: -12px; top: 0; width: 24px; height: 24px;
+            background: var(--accent-gold); 
+            border: 2px solid #fff; border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent-gold), 0 0 30px var(--accent-red);
+        }
+        .job-header { margin-bottom: 15px; }
+        .job-title { font-size: 1.6rem; font-weight: bold; color: var(--accent-gold); }
+        .company { color: var(--accent-red); font-weight: 600; }
+        .date { color: #888; font-size: 0.9rem; margin-bottom: 10px; display: block; }
+        .achievements li { margin-bottom: 8px; color: #ccc; list-style-type: none; margin-left: 20px; position: relative;}
+        .achievements li::before { content: "•"; color: var(--accent-green); position: absolute; left: -15px; font-size: 1.2em;}
+
+
+        /* --- CONTACT --- */
+        .contact { text-align: center; background: radial-gradient(circle at bottom, #2a0a0a 0%, #0a0a0a 60%); }
+        .contact h2 { font-size: 3rem; margin-bottom: 20px; color: var(--accent-gold); }
+        .contact-links { display: flex; justify-content: center; gap: 30px; margin-top: 30px; flex-wrap: wrap; }
+        .contact-btn {
+            border: 2px solid var(--accent-red); padding: 15px 25px; border-radius: 5px; background: var(--card-bg);
+            color: var(--text-color); font-weight: bold;
+            box-shadow: 0 0 10px rgba(212, 36, 38, 0.3);
+        }
+        .contact-btn:hover { 
+            border-color: var(--accent-gold); 
+            color: var(--accent-gold); 
+            background: var(--accent-red);
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+
+        /* --- FOOTER --- */
+        footer { text-align: center; padding: 20px; color: #777; font-size: 0.9rem; border-top: 1px solid #333; }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .nav-links { display: none; } 
+            .stats-grid { gap: 30px; }
+            header::before { background-size: 20px 20px; } /* Smaller lights on mobile */
+        }
+    </style>
+</head>
+<body>
+    <div id="snow-container"></div>
+
+    <header>
+        <div class="container nav-flex">
+            <div class="logo">YASHRAJ GAUR</div>
+            <nav class="nav-links">
+                <a href="#about">About</a>
+                <a href="#expertise">Expertise</a>
+                <a href="#work">Work</a>
+                <a href="#contact">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>Scaling Brands to <br><span>Exponential Growth</span></h1>
+            <p>Senior SMM Specialist & Digital Strategist. I translate complex data into actionable strategies and massive community growth this holiday season and beyond.</p>
+            <a href="#contact" class="btn">🎁 Let's Unwrap Strategy</a>
+        </div>
+    </section>
+
+    <section class="stats">
+        <div class="container stats-grid">
+            <div class="stat-item">
+                <h3>200k+</h3>
+                <p>Instagram Followers Gained</p>
+            </div>
+            <div class="stat-item">
+                <h3>33k+</h3>
+                <p>Telegram Members Added</p>
+            </div>
+            <div class="stat-item">
+                <h3>5+</h3>
+                <p>Years Experience</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="expertise" class="skills">
+        <div class="container">
+            <h2>Core Competencies</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>Strategy & Platforms</h3>
+                    <ul>
+                        <li>SMM Strategy & Digital Marketing</li>
+                        <li>Campaign Development</li>
+                        <li>Competitor Analysis</li>
+                        <li>Instagram, Facebook, Telegram, LinkedIn</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Analytics & Tools</h3>
+                    <ul>
+                        <li>Meta Ads & Google Analytics</li>
+                        <li>SEMrush & Data Optimization</li>
+                        <li>Hootsuite, Buffer, Sprout Social</li>
+                        <li>Data Analysis & Reporting</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>Content & Engagement</h3>
+                    <ul>
+                        <li>Content Creation & Copywriting</li>
+                        <li>Influencer Marketing</li>
+                        <li>Visual Design & Multimedia</li>
+                        <li>Community Crisis Management</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="work" class="experience">
+        <div class="container">
+            <h2>Professional Experience</h2>
+            
+            <div class="timeline-item">
+                <div class="job-header">
+                    <div class="job-title">Senior SMM Specialist</div>
+                    <span class="company">1XBET (Russia)</span>
+                    <span class="date">Jun 2022 - Present</span>
+                </div>
+                <ul class="achievements">
+                    <li><strong>Massive Growth:</strong> Scaled flagship Instagram from scratch to 200,000+ followers and Telegram to 33,000+ members.</li>
+                    <li><strong>Data-Driven ROI:</strong> Utilized Meta Ads, Google Analytics, and SEMrush to optimize campaigns and improve ROI.</li>
+                    <li><strong>Reputation Management:</strong> Mitigated negative feedback on Reddit/Quora, improving brand perception.</li>
+                    <li><strong>Global Strategy:</strong> Executed multi-channel strategies increasing brand awareness across international markets.</li>
+                </ul>
+            </div>
+
+            <div class="timeline-item">
+                <div class="job-header">
+                    <div class="job-title">Social Media Manager</div>
+                    <span class="company">Loco (Delhi, India)</span>
+                    <span class="date">Feb 2022 - Oct 2023</span>
+                </div>
+                <ul class="achievements">
+                    <li>Managed content and campaigns across multiple platforms supporting key brand-building goals.</li>
+                    <li>Implemented daily operations: scheduling, moderation, and interaction to maintain high engagement.</li>
+                    <li>Aligned social strategies directly with company branding and audience growth objectives.</li>
+                </ul>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2>Ready to Scale?</h2>
+            <p>Give your brand the gift of growth. I am currently looking for new opportunities.</p>
+            
+            <div class="contact-links">
+                <a href="mailto:officialyashyrg@gmail.com" class="contact-btn">
+                    ✉️ officialyashyrg@gmail.com
+                </a>
+                <a href="tel:+917697605145" class="contact-btn">
+                    📞 +91 769 760 5145
+                </a>
+                <a href="https://www.linkedin.com/in/yashraj-gaur02" class="contact-btn">
+                    🔗 LinkedIn Profile
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2024 Yashraj Gaur. MBA in Information Technology. Happy Holidays!</p>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const snowContainer = document.getElementById('snow-container');
+            const maxFlakes = 450; // Adjust number of snowflakes
+
+            function createSnowflake() {
+                if (snowContainer.childElementCount >= maxFlakes) return;
+
+                const flake = document.createElement('div');
+                flake.classList.add('snowflake');
+                flake.innerHTML = '❄'; // You can use • or * instead
+                
+                // Randomize starting position and size
+                flake.style.left = Math.random() * 100 + 'vw';
+                flake.style.fontSize = (Math.random() * 10 + 13) + 'px';
+                flake.style.opacity = Math.random();
+                
+                // Randomize animation duration and delay
+                const duration = Math.random() * 5 + 5; + 's';
+                const delay = Math.random() * 1 + 's';
+                
+                flake.style.animation = `fall ${duration}s linear ${delay} infinite`;
+                
+                snowContainer.appendChild(flake);
+
+                // Remove flake after it falls to keep DOM clean (optional if infinite loop works well)
+                // setTimeout(() => { flake.remove(); }, (parseFloat(duration) + parseFloat(delay)) * 1000);
+            }
+
+            // Create snowflakes periodically
+            setInterval(createSnowflake, 500);
+
+            // Inject the keyframes for falling snow to avoid cluttering CSS block
+            const styleSheet = document.createElement("style");
+            styleSheet.type = "text/css";
+            styleSheet.innerText = `
+                @keyframes fall {
+                    0% {
+                        transform: translateY(-10vh) rotate(0deg);
+                    }
+                    100% {
+                        transform: translateY(100vh) rotate(360deg);
+                    }
+                }
+            `;
+            document.head.appendChild(styleSheet);
+        });
+    </script>
+</body>
+</html>

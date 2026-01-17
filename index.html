@@ -5,32 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yashraj Gaur | Senior SMM Specialist & Growth Strategist</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <!-- Palette & Configuration -->
-    <!-- Chosen Palette: "Warm Corporate" - Cream/Off-White Background, Deep Navy Text, Subtle Orange Accents for engagement. -->
-    <!-- Application Structure Plan: 
-         1. Hero Section: Immediate value proposition and summary.
-         2. The Metrics Dashboard: Visualizing the "200k followers" and "$100k budget" claims immediately. 
-         3. Experience Timeline: Interactive cards detailing the 1XBET and Loco roles.
-         4. Skill Matrix: Radar chart for competencies.
-         5. Tools Ecosystem: Interactive filterable list of tools.
-         This structure prioritizes *results* (metrics) over *chronology*, proving value first.
-    -->
-    <!-- Visualization & Content Choices:
-         1. Growth Chart (Line): Visualizes the 0->200k journey. Goal: Show scale.
-         2. Skill Radar (Radar): Shows balance between creative and analytical skills. Goal: Inform.
-         3. Budget Optimization (Bar/Line): Demonstrates ROI focus. Goal: Impress/Analysis.
-         4. Interaction: Filter buttons for skills/tools to declutter the UI.
-    -->
-    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. All icons are Unicode or CSS. -->
 
     <script>
         tailwind.config = {
@@ -41,13 +20,13 @@
                     },
                     colors: {
                         brand: {
-                            bg: '#F9F9F7',       // Warm off-white
-                            surface: '#FFFFFF',   // Pure white for cards
-                            text: '#1A202C',      // Deep Navy/Black
-                            muted: '#718096',     // Cool Gray
-                            accent: '#ED8936',    // Muted Orange for CTAs
-                            primary: '#2B6CB0',   // Professional Blue
-                            secondary: '#2D3748'  // Dark slate
+                            bg: '#F9F9F7',
+                            surface: '#FFFFFF',
+                            text: '#1A202C',
+                            muted: '#718096',
+                            accent: '#ED8936',
+                            primary: '#2B6CB0',
+                            secondary: '#2D3748'
                         }
                     }
                 }
@@ -62,74 +41,66 @@
             scroll-behavior: smooth;
         }
         
-        /* Chart Container Styling - Mandatory Requirements */
         .chart-container {
             position: relative;
             width: 100%;
-            max-width: 100%; /* Adapts to grid column */
             margin-left: auto;
             margin-right: auto;
             height: 300px;
-            max-height: 400px;
         }
         
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
-        }
-
         .glass-card {
             background: rgba(255, 255, 255, 0.95);
             border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
             border-radius: 1rem;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: all 0.3s ease;
         }
 
         .glass-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.025);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
         }
 
-        .nav-link {
-            position: relative;
-        }
-        
+        .nav-link { position: relative; }
         .nav-link::after {
             content: '';
             position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -4px;
-            left: 0;
+            width: 0; height: 2px;
+            bottom: -4px; left: 0;
             background-color: #ED8936;
             transition: width 0.3s ease;
         }
+        .nav-link:hover::after { width: 100%; }
 
-        .nav-link:hover::after {
-            width: 100%;
+        /* Lightbox Styles */
+        #lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
         }
-
-        /* Custom Scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #F9F9F7;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #CBD5E0;
-            border-radius: 4px;
-        }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #A0AEC0;
+        #lightbox img {
+            max-width: 90%;
+            max-height: 80%;
+            border-radius: 8px;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
         }
     </style>
 </head>
-<body class="antialiased selection:bg-brand-accent selection:text-white">
+<body class="antialiased">
 
-    <!-- Navigation -->
+    <div id="lightbox" onclick="closeLightbox()">
+        <button class="absolute top-10 right-10 text-white text-4xl font-light">&times;</button>
+        <img id="lightboxImg" src="" alt="Full size preview">
+    </div>
+
     <nav class="sticky top-0 z-50 bg-brand-bg/90 backdrop-blur-md border-b border-gray-200">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center h-16">
@@ -138,492 +109,237 @@
                 </div>
                 <div class="hidden md:flex space-x-8">
                     <a href="#overview" class="nav-link text-sm font-medium text-gray-700 hover:text-brand-primary">Overview</a>
-                    <a href="#impact" class="nav-link text-sm font-medium text-gray-700 hover:text-brand-primary">Impact & Growth</a>
                     <a href="#experience" class="nav-link text-sm font-medium text-gray-700 hover:text-brand-primary">Experience</a>
-                    <a href="#skills" class="nav-link text-sm font-medium text-gray-700 hover:text-brand-primary">Competencies</a>
+                    <a href="#portfolio" class="nav-link text-sm font-medium text-gray-700 hover:text-brand-primary font-bold text-brand-accent">Work Samples</a>
+                    <a href="#skills" class="nav-link text-sm font-medium text-gray-700 hover:text-brand-primary">Skills</a>
                 </div>
-                <div>
-                    <a href="#contact" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-brand-primary hover:bg-brand-secondary transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-primary">
-                        Contact Me
-                    </a>
-                </div>
+                <a href="#contact" class="px-4 py-2 text-sm font-medium rounded-md text-white bg-brand-primary hover:bg-brand-secondary transition-all">Contact</a>
             </div>
-        </div>
-        <!-- Mobile Menu Placeholder (Simplified) -->
-        <div class="md:hidden flex justify-around py-2 border-t border-gray-200 bg-white">
-            <a href="#overview" class="text-xs font-medium text-gray-600">Home</a>
-            <a href="#impact" class="text-xs font-medium text-gray-600">Impact</a>
-            <a href="#experience" class="text-xs font-medium text-gray-600">Work</a>
-            <a href="#contact" class="text-xs font-medium text-gray-600">Contact</a>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="overview" class="pt-16 pb-12 sm:pt-24 sm:pb-16 lg:pb-24">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-gray-900 mb-6">
-                Yashraj Gaur
-            </h1>
-            <p class="text-xl sm:text-2xl text-gray-600 max-w-3xl mx-auto mb-8 font-light">
-                Senior SMM Specialist & Digital Strategist. <br class="hidden sm:block">
-                I translate <span class="text-brand-primary font-medium">complex data</span> into <span class="text-brand-accent font-medium">exponential audience growth</span>.
+    <section id="overview" class="pt-20 pb-16">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-5xl lg:text-7xl font-bold text-gray-900 mb-6">Yashraj Gaur</h1>
+            <p class="text-xl sm:text-2xl text-gray-600 max-w-3xl mx-auto mb-12 font-light">
+                Senior SMM Specialist. Managing <span class="text-brand-primary font-medium">$100k+ budgets</span> and scaling communities to <span class="text-brand-accent font-medium">200k+ followers</span>.
             </p>
-            
-            <div class="flex flex-wrap justify-center gap-4 mb-12">
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
-                    Growth Strategy
-                </span>
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                    Campaign Management
-                </span>
-                <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-purple-100 text-purple-800">
-                    Data Analytics
-                </span>
-            </div>
-
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                <div class="glass-card p-6">
-                    <div class="text-4xl font-bold text-brand-primary mb-2">200K+</div>
-                    <div class="text-sm text-gray-500 uppercase tracking-wide">Instagram Followers Scaled</div>
-                </div>
-                <div class="glass-card p-6">
-                    <div class="text-4xl font-bold text-brand-accent mb-2">$100K+</div>
-                    <div class="text-sm text-gray-500 uppercase tracking-wide">Monthly Ad Budget Managed</div>
-                </div>
-                <div class="glass-card p-6">
-                    <div class="text-4xl font-bold text-gray-800 mb-2">5+</div>
-                    <div class="text-sm text-gray-500 uppercase tracking-wide">Years Experience</div>
-                </div>
+                <div class="glass-card p-8"><div class="text-4xl font-bold text-brand-primary">200K+</div><div class="text-xs uppercase mt-2 text-gray-500">IG Growth</div></div>
+                <div class="glass-card p-8"><div class="text-4xl font-bold text-brand-accent">$1.2M</div><div class="text-xs uppercase mt-2 text-gray-500">Annual Ad Spend</div></div>
+                <div class="glass-card p-8"><div class="text-4xl font-bold text-gray-800">5+ Yrs</div><div class="text-xs uppercase mt-2 text-gray-500">Expertise</div></div>
             </div>
         </div>
     </section>
 
-    <!-- Impact Dashboard Section -->
-    <section id="impact" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-bold text-gray-900">The Growth Engine</h2>
-                <p class="mt-4 text-lg text-gray-500 max-w-2xl mx-auto">
-                    A visual breakdown of key achievements at 1XBET. My strategy focuses on data-driven content adjustments to maximize organic and paid reach.
-                </p>
+    <section id="impact" class="py-16 bg-white border-y border-gray-100">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div class="glass-card p-6">
+                <h3 class="font-bold mb-4">Community Scaling (1XBET)</h3>
+                <div class="chart-container"><canvas id="growthChart"></canvas></div>
             </div>
-
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                <!-- Chart 1: Growth Trajectory -->
-                <div class="glass-card p-6">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900">Community Scaling (1XBET)</h3>
-                        <span class="text-xs font-mono bg-gray-100 px-2 py-1 rounded">2022 - Present</span>
-                    </div>
-                    <p class="text-sm text-gray-600 mb-4">
-                        Scaled the flagship Instagram channel from scratch to over <span class="font-bold">200,000</span> engaging followers and drove <span class="font-bold">33,000+</span> members to Telegram.
-                    </p>
-                    <div class="chart-container">
-                        <canvas id="growthChart"></canvas>
-                    </div>
-                </div>
-
-                <!-- Chart 2: Budget vs ROI Logic -->
-                <div class="glass-card p-6">
-                    <div class="flex justify-between items-center mb-6">
-                        <h3 class="text-lg font-semibold text-gray-900">Strategic Optimization</h3>
-                        <div class="flex space-x-2">
-                            <button class="px-2 py-1 text-xs rounded bg-brand-primary text-white" onclick="updateRoiChart('optimization')">Optimization View</button>
-                            <button class="px-2 py-1 text-xs rounded bg-gray-200 hover:bg-gray-300" onclick="updateRoiChart('allocation')">Budget Split</button>
-                        </div>
-                    </div>
-                    <p id="roiText" class="text-sm text-gray-600 mb-4">
-                        Leveraging a full analytics stack (Meta Ads, GA, SEMrush) to optimize metrics. Showing the conceptual relationship between optimization efforts and ROI improvement.
-                    </p>
-                    <div class="chart-container">
-                        <canvas id="roiChart"></canvas>
-                    </div>
-                </div>
+            <div class="glass-card p-6">
+                <h3 class="font-bold mb-4">Ad Optimization Strategy</h3>
+                <div class="chart-container"><canvas id="roiChart"></canvas></div>
             </div>
         </div>
     </section>
 
-    <!-- Experience Timeline -->
-    <section id="experience" class="py-16 bg-brand-bg">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 class="text-3xl font-bold text-gray-900 mb-12 text-center">Professional Journey</h2>
-            
-            <div class="space-y-8">
-                <!-- Role 1 -->
-                <div class="glass-card p-8 border-l-4 border-brand-primary">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <div>
-                            <h3 class="text-2xl font-bold text-gray-900">Senior SMM Specialist</h3>
-                            <div class="text-lg text-brand-primary font-medium">1XBET (Global)</div>
-                        </div>
-                        <div class="mt-2 md:mt-0 text-sm text-gray-500 font-mono">
-                            Jun 2022 - Present
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="md:col-span-2 space-y-3">
-                            <p class="text-gray-700">
-                                Spearheading global social media strategy. Directly responsible for channel growth and high-impact digital campaigns in competitive international markets.
-                            </p>
-                            <ul class="list-disc pl-5 text-gray-600 space-y-1">
-                                <li><strong>Exponential Growth:</strong> Scaled Instagram from 0 to 200k+ and Telegram to 33k+.</li>
-                                <li><strong>Budget Management:</strong> Managed $100k+ monthly ad budget across Meta & other platforms.</li>
-                                <li><strong>Reputation Management:</strong> Proactively managed brand sentiment on Reddit & Quora.</li>
-                                <li><strong>Global Strategy:</strong> Executed multi-channel strategies increasing international brand awareness.</li>
-                            </ul>
-                        </div>
-                        <div class="bg-gray-50 rounded-lg p-4 flex flex-col justify-center">
-                            <h4 class="text-sm font-semibold text-gray-400 uppercase mb-3">Key Tools Used</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 text-xs bg-white border border-gray-200 rounded text-gray-600">Meta Ads</span>
-                                <span class="px-2 py-1 text-xs bg-white border border-gray-200 rounded text-gray-600">Google Analytics</span>
-                                <span class="px-2 py-1 text-xs bg-white border border-gray-200 rounded text-gray-600">SEMrush</span>
-                                <span class="px-2 py-1 text-xs bg-white border border-gray-200 rounded text-gray-600">Reddit/Quora</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Role 2 -->
-                <div class="glass-card p-8 border-l-4 border-brand-accent">
-                    <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-4">
-                        <div>
-                            <h3 class="text-2xl font-bold text-gray-900">Social Media Manager</h3>
-                            <div class="text-lg text-brand-accent font-medium">Loco (Delhi, India)</div>
-                        </div>
-                        <div class="mt-2 md:mt-0 text-sm text-gray-500 font-mono">
-                            Feb 2022 - Oct 2023
-                        </div>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <div class="md:col-span-2 space-y-3">
-                            <p class="text-gray-700">
-                                Managed content lifecycles and daily operations across multiple platforms to support brand-building and audience engagement goals.
-                            </p>
-                            <ul class="list-disc pl-5 text-gray-600 space-y-1">
-                                <li><strong>Operations:</strong> Streamlined daily posting schedules using Hootsuite and Sprout Social.</li>
-                                <li><strong>Strategy:</strong> Aligned social strategies directly with company branding objectives.</li>
-                                <li><strong>Engagement:</strong> Handled moderation and audience interaction to maintain high engagement rates.</li>
-                            </ul>
-                        </div>
-                        <div class="bg-gray-50 rounded-lg p-4 flex flex-col justify-center">
-                            <h4 class="text-sm font-semibold text-gray-400 uppercase mb-3">Key Tools Used</h4>
-                            <div class="flex flex-wrap gap-2">
-                                <span class="px-2 py-1 text-xs bg-white border border-gray-200 rounded text-gray-600">Hootsuite</span>
-                                <span class="px-2 py-1 text-xs bg-white border border-gray-200 rounded text-gray-600">Sprout Social</span>
-                                <span class="px-2 py-1 text-xs bg-white border border-gray-200 rounded text-gray-600">Content Calendar</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <section id="portfolio" class="py-20 bg-brand-bg">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900">Work Portfolio</h2>
+                <p class="text-gray-500 mt-4">Click any image to expand. Designs focus on conversion and high-stakes branding.</p>
             </div>
-        </div>
-    </section>
 
-    <!-- Skills & Tools Matrix -->
-    <section id="skills" class="py-16 bg-white">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 
-                <!-- Radar Chart -->
-                <div class="lg:col-span-1">
-                    <h2 class="text-3xl font-bold text-gray-900 mb-6">Core Competencies</h2>
-                    <p class="text-gray-600 mb-6 text-sm">
-                        A balanced profile blending creative content production with rigorous data analysis and strategic planning.
-                    </p>
-                    <div class="chart-container bg-white rounded-xl shadow-sm border border-gray-100 p-2">
-                        <canvas id="skillsChart"></canvas>
+                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('for sm.png')">
+                    <img src="for sm.png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="Winter Spinsation">
+                    <div class="p-6">
+                        <span class="text-orange-500 text-xs font-bold tracking-widest uppercase">Casino Campaign</span>
+                        <h4 class="font-bold text-lg mt-1">Winter Spinsation Campaign</h4>
                     </div>
                 </div>
 
-                <!-- Interactive Tech Stack -->
-                <div class="lg:col-span-2">
-                    <div class="flex flex-col h-full">
-                        <div class="flex justify-between items-end mb-6">
-                            <h2 class="text-3xl font-bold text-gray-900">Tech Stack & Tools</h2>
-                            
-                            <!-- Filters -->
-                            <div class="flex flex-wrap gap-2 text-sm justify-end">
-                                <button onclick="filterTools('all')" class="tool-filter active px-3 py-1 rounded-full bg-gray-200 hover:bg-brand-primary hover:text-white transition-colors">All</button>
-                                <button onclick="filterTools('analytics')" class="tool-filter px-3 py-1 rounded-full bg-gray-100 hover:bg-brand-primary hover:text-white transition-colors">Analytics</button>
-                                <button onclick="filterTools('management')" class="tool-filter px-3 py-1 rounded-full bg-gray-100 hover:bg-brand-primary hover:text-white transition-colors">Management</button>
-                                <button onclick="filterTools('content')" class="tool-filter px-3 py-1 rounded-full bg-gray-100 hover:bg-brand-primary hover:text-white transition-colors">Content</button>
-                                <button onclick="filterTools('editing')" class="tool-filter px-3 py-1 rounded-full bg-gray-100 hover:bg-brand-primary hover:text-white transition-colors">Editing</button>
-                            </div>
-                        </div>
-
-                        <!-- Grid -->
-                        <div id="toolsGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-4 flex-grow">
-                            <!-- Populated by JS -->
-                        </div>
+                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('GOLD & GLORY.png')">
+                    <img src="GOLD & GLORY.png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="BBL Gold Glory">
+                    <div class="p-6">
+                        <span class="text-blue-500 text-xs font-bold tracking-widest uppercase">Cricket Promotion</span>
+                        <h4 class="font-bold text-lg mt-1">BBL Gold & Glory Tournament</h4>
                     </div>
+                </div>
+
+                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('4in1 1200x600.png')">
+                    <img src="4in1 1200x600.png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="Matchday Preview">
+                    <div class="p-6">
+                        <span class="text-green-600 text-xs font-bold tracking-widest uppercase">Analytics Layout</span>
+                        <h4 class="font-bold text-lg mt-1">Multi-Match Odds Preview</h4>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('20 mail 1200x600.png')">
+                    <img src="20 mail 1200x600.png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="No Risk Bet">
+                    <div class="p-6">
+                        <span class="text-orange-500 text-xs font-bold tracking-widest uppercase">Product Feature</span>
+                        <h4 class="font-bold text-lg mt-1">"No Risk Bet" Product Spotlight</h4>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('INDCRIC (6).png')">
+                    <img src="INDCRIC (6).png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="Premier League">
+                    <div class="p-6">
+                        <span class="text-blue-500 text-xs font-bold tracking-widest uppercase">League Strategy</span>
+                        <h4 class="font-bold text-lg mt-1">Premier League Engagement</h4>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('start league.jpg')">
+                    <img src="start league.jpg" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="Star League">
+                    <div class="p-6">
+                        <span class="text-purple-500 text-xs font-bold tracking-widest uppercase">UX Promo</span>
+                        <h4 class="font-bold text-lg mt-1">Champions Star League UI</h4>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('1200x600 (2).png')">
+                    <img src="1200x600 (2).png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="La Liga">
+                    <div class="p-6">
+                        <span class="text-red-500 text-xs font-bold tracking-widest uppercase">Football Odds</span>
+                        <h4 class="font-bold text-lg mt-1">Real Sociedad vs Barcelona</h4>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('PROMOCODE - INDCRIC (7).png')">
+                    <img src="PROMOCODE - INDCRIC (7).png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="India vs NZ">
+                    <div class="p-6">
+                        <span class="text-blue-500 text-xs font-bold tracking-widest uppercase">Affiliate Marketing</span>
+                        <h4 class="font-bold text-lg mt-1">India vs New Zealand Promo</h4>
+                    </div>
+                </div>
+
+                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('PROMOCODE - INDCRIC (4).png')">
+                    <img src="PROMOCODE - INDCRIC (4).png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="Multi League">
+                    <div class="p-6">
+                        <span class="text-green-600 text-xs font-bold tracking-widest uppercase">Data Viz</span>
+                        <h4 class="font-bold text-lg mt-1">Global Matchday Summary</h4>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-center">Professional Experience</h2>
+            <div class="space-y-8">
+                <div class="border-l-4 border-brand-primary pl-6 py-2">
+                    <h4 class="text-xl font-bold">Senior SMM Specialist</h4>
+                    <div class="text-brand-primary font-medium">1XBET (Russia/Global) | 2022 - 2024</div>
+                    <p class="mt-2 text-gray-600">Scaled flagship Instagram from 0 to 200k+ followers. Managed $100k+ monthly ad spend on Meta.</p>
+                </div>
+                <div class="border-l-4 border-gray-300 pl-6 py-2">
+                    <h4 class="text-xl font-bold">Social Media Manager</h4>
+                    <div class="text-gray-500 font-medium">Loco (Delhi, India) | 2022 - 2023</div>
+                    <p class="mt-2 text-gray-600">Orchestrated content strategies for gaming communities and streaming growth.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer / Contact -->
-    <section id="contact" class="bg-gray-900 text-white py-16">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <h2 class="text-3xl font-bold mb-6">Ready to Scale Your Brand?</h2>
-            <p class="text-gray-400 mb-8 max-w-2xl mx-auto">
-                With a proven track record of managing high-budget campaigns and building massive communities, I am ready to bring data-driven growth to your team.
-            </p>
-            
-            <div class="flex flex-col md:flex-row justify-center items-center gap-6 mb-12">
-                <a href="mailto:officialyashyrg@gmail.com" class="flex items-center space-x-2 text-lg hover:text-brand-accent transition-colors">
-                    <span>&#9993;</span> <!-- Email Unicode -->
-                    <span>officialyashyrg@gmail.com</span>
-                </a>
-                <a href="tel:7697605145" class="flex items-center space-x-2 text-lg hover:text-brand-accent transition-colors">
-                    <span>&#9742;</span> <!-- Phone Unicode -->
-                    <span>+91 7697605145</span>
-                </a>
-                <a href="https://www.linkedin.com/in/yashraj-gaur02/" class="flex items-center space-x-2 text-lg hover:text-brand-accent transition-colors">
-                    <span>&#128279;</span> <!-- Link Unicode -->
-                    <span>LinkedIn Profile</span>
-                </a>
+    <section id="skills" class="py-20 bg-brand-bg">
+        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div>
+                <h2 class="text-3xl font-bold mb-6">Expertise Matrix</h2>
+                <p class="text-gray-600 mb-8">Balancing creative flair with analytical precision to drive ROI.</p>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="p-4 bg-white rounded shadow-sm">Meta Ads Expert</div>
+                    <div class="p-4 bg-white rounded shadow-sm">ROI Optimization</div>
+                    <div class="p-4 bg-white rounded shadow-sm">Global Branding</div>
+                    <div class="p-4 bg-white rounded shadow-sm">Data Analytics</div>
+                </div>
             </div>
-
-            <div class="text-sm text-gray-600 border-t border-gray-800 pt-8">
-                <p>Location: As Per Req.</p>
-                <p>&copy; 2025 Yashraj Gaur. MBA (Information Technology).</p>
+            <div class="glass-card p-6 h-[400px]">
+                <canvas id="skillsChart"></canvas>
             </div>
         </div>
     </section>
 
-    <!-- JavaScript Logic -->
+    <footer id="contact" class="bg-brand-secondary text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-8">Let's Connect</h2>
+            <div class="flex flex-wrap justify-center gap-8 text-lg mb-12">
+                <a href="mailto:officialyashyrg@gmail.com" class="hover:text-brand-accent transition-colors">officialyashyrg@gmail.com</a>
+                <a href="tel:7697605145" class="hover:text-brand-accent transition-colors">+91 7697605145</a>
+                <a href="https://www.linkedin.com/in/yashraj-gaur02/" class="hover:text-brand-accent transition-colors">LinkedIn</a>
+            </div>
+            <p class="text-gray-500 text-sm">© 2026 Yashraj Gaur. Senior SMM Specialist.</p>
+        </div>
+    </footer>
+
     <script>
-        // Data Store
-        const toolsData = [
-            { name: "Meta Ads Manager", category: "analytics", desc: "Campaign setup & ROI optimization" },
-            { name: "Google Analytics", category: "analytics", desc: "Traffic & conversion tracking" },
-            { name: "SEMrush", category: "analytics", desc: "SEO & Competitor analysis" },
-            { name: "Hootsuite", category: "management", desc: "Scheduling & social listening" },
-            { name: "Sprout Social", category: "management", desc: "Reporting & publishing" },
-            { name: "Buffer", category: "management", desc: "Queue management" },
-            { name: "Copywriting", category: "content", desc: "Ad copy & post captions" },
-            { name: "Influencer Marketing", category: "content", desc: "Partnership management" },
-            { name: "Adobe Creative Suite", category: "editing", desc: "Professional visual asset creation" },
-            { name: "Canva", category: "editing", desc: "Rapid graphic design & templating" },
-            { name: "CapCut", category: "editing", desc: "Short-form video editing" },
-            { name: "InShot", category: "editing", desc: "Mobile video production" }
-        ];
+        // Lightbox Functions
+        function openLightbox(src) {
+            document.getElementById('lightboxImg').src = src;
+            document.getElementById('lightbox').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling
+        }
 
-        // --- CHART INITIALIZATION ---
-        
-        // 1. Growth Chart (Line)
+        function closeLightbox() {
+            document.getElementById('lightbox').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        }
+
+        // --- CHARTS ---
+        // 1. Growth Chart
         const ctxGrowth = document.getElementById('growthChart').getContext('2d');
-        const growthChart = new Chart(ctxGrowth, {
+        new Chart(ctxGrowth, {
             type: 'line',
             data: {
                 labels: ['Start', 'Q3 2022', 'Q1 2023', 'Q3 2023', 'Present'],
-                datasets: [
-                    {
-                        label: 'Instagram Followers',
-                        data: [0, 45000, 110000, 160000, 200000],
-                        borderColor: '#E1306C', // Instagram Color roughly
-                        backgroundColor: 'rgba(225, 48, 108, 0.1)',
-                        tension: 0.4,
-                        fill: true,
-                        yAxisID: 'y'
-                    },
-                    {
-                        label: 'Telegram Members',
-                        data: [0, 5000, 15000, 24000, 33000],
-                        borderColor: '#0088cc', // Telegram Color
-                        backgroundColor: 'rgba(0, 136, 204, 0.1)',
-                        tension: 0.4,
-                        fill: true,
-                        yAxisID: 'y1'
-                    }
-                ]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                interaction: {
-                    mode: 'index',
-                    intersect: false,
-                },
-                plugins: {
-                    legend: { position: 'top' },
-                    tooltip: {
-                        callbacks: {
-                            label: function(context) {
-                                let label = context.dataset.label || '';
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null) {
-                                    label += new Intl.NumberFormat('en-US').format(context.parsed.y);
-                                }
-                                return label;
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: {
-                        type: 'linear',
-                        display: true,
-                        position: 'left',
-                        title: { display: true, text: 'Instagram' },
-                        grid: { display: false }
-                    },
-                    y1: {
-                        type: 'linear',
-                        display: true,
-                        position: 'right',
-                        title: { display: true, text: 'Telegram' },
-                        grid: { color: '#f3f4f6' }
-                    },
-                    x: {
-                        grid: { display: false }
-                    }
-                }
-            }
-        });
-
-        // 2. ROI/Optimization Chart (Dynamic)
-        const ctxRoi = document.getElementById('roiChart').getContext('2d');
-        let roiChart = new Chart(ctxRoi, {
-            type: 'bar',
-            data: {
-                labels: ['Month 1', 'Month 3', 'Month 6', 'Month 12'],
                 datasets: [{
-                    label: 'Campaign ROI Improvement (%)',
-                    data: [100, 140, 210, 350], // Simulated improvement curve based on "improved overall campaign ROI"
-                    backgroundColor: '#2B6CB0',
-                    borderRadius: 4
+                    label: 'Followers Growth',
+                    data: [0, 45000, 110000, 165000, 200000],
+                    borderColor: '#ED8936',
+                    tension: 0.4,
+                    fill: true,
+                    backgroundColor: 'rgba(237, 137, 54, 0.1)'
                 }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: { display: true },
-                    tooltip: {
-                        callbacks: {
-                            afterBody: function(context) {
-                                return "Data-driven adjustments implemented.";
-                            }
-                        }
-                    }
-                },
-                scales: {
-                    y: { beginAtZero: true, grid: { color: '#f3f4f6' } },
-                    x: { grid: { display: false } }
-                }
-            }
+            options: { maintainAspectRatio: false }
         });
 
-        function updateRoiChart(mode) {
-            const textField = document.getElementById('roiText');
-            
-            if (mode === 'optimization') {
-                roiChart.config.type = 'bar';
-                roiChart.data.labels = ['Month 1', 'Month 3', 'Month 6', 'Month 12'];
-                roiChart.data.datasets = [{
-                    label: 'Campaign ROI Improvement (%)',
-                    data: [100, 140, 210, 350],
-                    backgroundColor: '#2B6CB0',
-                    borderRadius: 4
-                }];
-                textField.innerText = "Utilizing full analytics stack (Meta Ads, Google Analytics) to monitor and optimize, resulting in consistent ROI growth over time.";
-            } else {
-                roiChart.config.type = 'doughnut';
-                roiChart.data.labels = ['Meta Ads', 'Influencers', 'Google Ads', 'Content Production'];
-                roiChart.data.datasets = [{
-                    label: 'Budget Allocation Strategy',
-                    data: [45, 25, 20, 10], // Hypothetical strategic split
-                    backgroundColor: ['#2B6CB0', '#ED8936', '#48BB78', '#A0AEC0'],
-                    borderWidth: 0
-                }];
-                textField.innerText = "Strategic allocation of $100k+ monthly budget across high-impact channels to maximize reach and conversion.";
-            }
-            roiChart.update();
-        }
+        // 2. ROI Chart
+        const ctxRoi = document.getElementById('roiChart').getContext('2d');
+        new Chart(ctxRoi, {
+            type: 'bar',
+            data: {
+                labels: ['FB Ads', 'IG Ads', 'Telegram', 'Reddit'],
+                datasets: [{
+                    label: 'Efficiency Index',
+                    data: [85, 95, 70, 60],
+                    backgroundColor: '#2B6CB0'
+                }]
+            },
+            options: { maintainAspectRatio: false }
+        });
 
         // 3. Skills Radar
         const ctxSkills = document.getElementById('skillsChart').getContext('2d');
         new Chart(ctxSkills, {
             type: 'radar',
             data: {
-                labels: ['Strategy', 'Analytics', 'Content', 'Paid Ads', 'Community', 'Tools'],
+                labels: ['Strategy', 'Ads', 'Content', 'Analytics', 'Community', 'Tools'],
                 datasets: [{
-                    label: 'Skill Proficiency',
-                    data: [95, 90, 85, 90, 95, 85],
-                    fill: true,
-                    backgroundColor: 'rgba(237, 137, 54, 0.2)', // Brand Accent
+                    label: 'Skill Level',
+                    data: [95, 90, 85, 92, 95, 88],
                     borderColor: '#ED8936',
-                    pointBackgroundColor: '#ED8936',
-                    pointBorderColor: '#fff',
-                    pointHoverBackgroundColor: '#fff',
-                    pointHoverBorderColor: '#ED8936'
+                    backgroundColor: 'rgba(237, 137, 54, 0.2)'
                 }]
             },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                elements: {
-                    line: { borderWidth: 3 }
-                },
-                scales: {
-                    r: {
-                        angleLines: { color: '#e2e8f0' },
-                        grid: { color: '#e2e8f0' },
-                        pointLabels: {
-                            font: { size: 11, family: 'Outfit' },
-                            color: '#4a5568'
-                        },
-                        suggestedMin: 50,
-                        suggestedMax: 100,
-                        ticks: { display: false } // Hide numbers for cleaner look
-                    }
-                },
-                plugins: {
-                    legend: { display: false }
-                }
-            }
+            options: { maintainAspectRatio: false }
         });
-
-        // --- INTERACTION LOGIC ---
-
-        // Tools Filter Logic
-        function filterTools(category) {
-            const grid = document.getElementById('toolsGrid');
-            const buttons = document.querySelectorAll('.tool-filter');
-            
-            // Update buttons state
-            buttons.forEach(btn => {
-                if (btn.innerText.toLowerCase() === category || (category === 'all' && btn.innerText === 'All')) {
-                    btn.classList.remove('bg-gray-100', 'text-gray-700');
-                    btn.classList.add('bg-brand-primary', 'text-white');
-                } else {
-                    btn.classList.add('bg-gray-100', 'text-gray-700');
-                    btn.classList.remove('bg-brand-primary', 'text-white');
-                }
-            });
-
-            // Filter Data
-            const filtered = category === 'all' 
-                ? toolsData 
-                : toolsData.filter(t => t.category === category);
-
-            // Render
-            grid.innerHTML = filtered.map(tool => `
-                <div class="p-4 border border-gray-100 rounded-lg hover:border-brand-primary/30 transition-colors bg-gray-50">
-                    <div class="font-semibold text-gray-800">${tool.name}</div>
-                    <div class="text-xs text-gray-500 mt-1">${tool.desc}</div>
-                </div>
-            `).join('');
-        }
-
-        // Initialize Tools Grid
-        filterTools('all');
-
     </script>
 </body>
 </html>
-

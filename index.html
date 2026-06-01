@@ -4,345 +4,1129 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Yashraj Gaur | Senior SMM Specialist & Growth Strategist</title>
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    
+
+    <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                    },
-                    colors: {
-                        brand: {
-                            bg: '#F9F9F7',
-                            surface: '#FFFFFF',
-                            text: '#1A202C',
-                            muted: '#718096',
-                            accent: '#ED8936',
-                            primary: '#2B6CB0',
-                            secondary: '#2D3748'
-                        }
-                    }
-                }
-            }
-        }
-    </script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 
     <style>
+        :root {
+            --bg:        #0A0D14;
+            --surface:   #111520;
+            --surface2:  #161B2E;
+            --border:    rgba(255,255,255,0.07);
+            --text:      #E8ECF4;
+            --muted:     #7C85A2;
+            --accent:    #F97316;
+            --accent2:   #3B82F6;
+            --accent3:   #10B981;
+            --glow:      rgba(249,115,22,0.18);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html { scroll-behavior: smooth; }
+
         body {
-            background-color: #F9F9F7;
-            color: #1A202C;
-            scroll-behavior: smooth;
-        }
-        
-        .chart-container {
-            position: relative;
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-            height: 300px;
-        }
-        
-        .glass-card {
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
-            border-radius: 1rem;
-            transition: all 0.3s ease;
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 16px;
+            line-height: 1.7;
+            overflow-x: hidden;
         }
 
-        .glass-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
-        }
-
-        .nav-link { position: relative; }
-        .nav-link::after {
+        /* ── Noise overlay ── */
+        body::before {
             content: '';
-            position: absolute;
-            width: 0; height: 2px;
-            bottom: -4px; left: 0;
-            background-color: #ED8936;
-            transition: width 0.3s ease;
-        }
-        .nav-link:hover::after { width: 100%; }
-
-        /* Lightbox Styles */
-        #lightbox {
-            display: none;
             position: fixed;
-            z-index: 9999;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.9);
-            backdrop-filter: blur(8px);
-            justify-content: center;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        /* ── Gradient orbs ── */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .orb-1 { width: 500px; height: 500px; background: rgba(249,115,22,0.07); top: -150px; right: -100px; }
+        .orb-2 { width: 400px; height: 400px; background: rgba(59,130,246,0.06); bottom: 20%; left: -100px; }
+
+        /* ── Typography ── */
+        h1, h2, h3, h4 { font-family: 'Syne', sans-serif; font-weight: 700; line-height: 1.15; }
+        h1 { font-size: clamp(2.6rem, 6vw, 5.2rem); font-weight: 800; letter-spacing: -0.02em; }
+        h2 { font-size: clamp(1.8rem, 3.5vw, 2.6rem); }
+        h3 { font-size: 1.2rem; }
+
+        .accent-text  { color: var(--accent); }
+        .accent2-text { color: var(--accent2); }
+        .muted        { color: var(--muted); }
+
+        /* ── Layout ── */
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+        /* ── Navigation ── */
+        nav {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(10,13,20,0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
             align-items: center;
-            cursor: zoom-out;
+            height: 64px;
         }
-        #lightbox img {
-            max-width: 90%;
-            max-height: 80%;
+        .logo { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.02em; }
+        .logo span { color: var(--accent); }
+        .nav-links { display: flex; gap: 32px; }
+        .nav-links a {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--muted);
+            text-decoration: none;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover { color: var(--text); }
+        .btn-nav {
+            background: var(--accent);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-weight: 600;
+            font-size: 0.82rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            padding: 8px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.2s;
+        }
+        .btn-nav:hover { opacity: 0.88; transform: translateY(-1px); }
+        .nav-mobile {
+            display: none;
+            justify-content: space-around;
+            padding: 10px 0;
+            border-top: 1px solid var(--border);
+            background: rgba(10,13,20,0.95);
+        }
+        .nav-mobile a { font-size: 0.75rem; color: var(--muted); text-decoration: none; letter-spacing: 0.05em; text-transform: uppercase; }
+        @media (max-width: 768px) {
+            .nav-links, .btn-nav { display: none; }
+            .nav-mobile { display: flex; }
+        }
+
+        /* ── Cards ── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px;
+            transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+        }
+        .card:hover {
+            border-color: rgba(249,115,22,0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 20px 60px -10px rgba(0,0,0,0.5), 0 0 40px -20px var(--glow);
+        }
+        .card-accent { border-left: 3px solid var(--accent); }
+        .card-accent2 { border-left: 3px solid var(--accent2); }
+        .card-accent3 { border-left: 3px solid var(--accent3); }
+
+        /* ── Hero ── */
+        #overview { padding: 100px 0 80px; }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(249,115,22,0.1);
+            border: 1px solid rgba(249,115,22,0.25);
+            color: var(--accent);
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 6px 14px;
+            border-radius: 100px;
+            margin-bottom: 24px;
+        }
+        .hero-badge::before { content: '●'; font-size: 0.5rem; animation: pulse 2s ease-in-out infinite; }
+        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+        .hero-sub {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            color: var(--muted);
+            max-width: 620px;
+            margin: 20px 0 40px;
+        }
+        .hero-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 56px; }
+        .tag {
+            font-size: 0.8rem;
+            font-weight: 500;
+            padding: 5px 14px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            color: var(--muted);
+            background: var(--surface);
+        }
+        .tag.blue   { border-color: rgba(59,130,246,0.3);  color: #93C5FD; background: rgba(59,130,246,0.08); }
+        .tag.orange { border-color: rgba(249,115,22,0.3);  color: #FCA889; background: rgba(249,115,22,0.08); }
+        .tag.green  { border-color: rgba(16,185,129,0.3);  color: #6EE7B7; background: rgba(16,185,129,0.08); }
+        .tag.purple { border-color: rgba(167,139,250,0.3); color: #C4B5FD; background: rgba(167,139,250,0.08); }
+
+        /* ── Stat cards ── */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        @media (max-width: 640px) { .stats-grid { grid-template-columns: 1fr; } }
+        .stat-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            text-align: center;
+        }
+        .stat-num { font-family: 'Syne', sans-serif; font-size: 2.4rem; font-weight: 800; line-height: 1; }
+        .stat-label { font-size: 0.75rem; letter-spacing: 0.07em; text-transform: uppercase; color: var(--muted); margin-top: 6px; }
+
+        /* ── Section layout ── */
+        section { padding: 80px 0; }
+        .section-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .section-title { margin-bottom: 12px; }
+        .section-desc { color: var(--muted); max-width: 560px; }
+        .section-head { margin-bottom: 52px; }
+
+        /* ── Charts ── */
+        .chart-container { position: relative; width: 100%; height: 300px; }
+        @media (min-width: 768px) { .chart-container { height: 340px; } }
+        .chart-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 28px; }
+        .chart-label {
+            font-family: 'Syne', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .chart-note { font-size: 0.82rem; color: var(--muted); margin-bottom: 20px; }
+
+        /* ── Toggle Buttons ── */
+        .toggle-group { display: flex; gap: 8px; }
+        .toggle-btn {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .toggle-btn.active, .toggle-btn:hover {
+            background: var(--accent);
+            border-color: var(--accent);
+            color: #fff;
+        }
+
+        /* ── Service Blocks ── */
+        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        @media (max-width: 900px) { .services-grid { grid-template-columns: 1fr; } }
+        .service-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 28px 28px 24px;
+            transition: border-color 0.25s, transform 0.25s, box-shadow 0.25s;
+        }
+        .service-card:hover {
+            border-color: rgba(249,115,22,0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 16px 48px -10px rgba(0,0,0,0.5);
+        }
+        .service-icon {
+            width: 48px; height: 48px;
+            border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.4rem;
+            margin-bottom: 16px;
+        }
+        .service-title { font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700; margin-bottom: 10px; }
+        .service-desc { font-size: 0.88rem; color: var(--muted); line-height: 1.6; margin-bottom: 14px; }
+        .service-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+        .service-pill {
+            font-size: 0.72rem;
+            font-weight: 500;
+            padding: 3px 10px;
+            border-radius: 100px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        /* ── Experience ── */
+        .exp-grid { display: flex; flex-direction: column; gap: 24px; }
+        .exp-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 32px;
+            transition: border-color 0.25s, box-shadow 0.25s;
+        }
+        .exp-card:hover { border-color: rgba(59,130,246,0.25); box-shadow: 0 16px 48px -10px rgba(0,0,0,0.4); }
+        .exp-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 20px; }
+        .exp-role { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; }
+        .exp-company { font-size: 0.95rem; font-weight: 500; margin-top: 2px; }
+        .exp-date {
+            font-size: 0.78rem;
+            font-weight: 500;
+            padding: 4px 12px;
+            border-radius: 100px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            color: var(--muted);
+            white-space: nowrap;
+        }
+        .exp-body { display: grid; grid-template-columns: 1fr auto; gap: 24px; }
+        @media (max-width: 640px) { .exp-body { grid-template-columns: 1fr; } }
+        .exp-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .exp-list li { font-size: 0.9rem; color: var(--muted); padding-left: 18px; position: relative; }
+        .exp-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-size: 0.78rem; top: 2px; }
+        .exp-list li strong { color: var(--text); }
+        .exp-tools { background: var(--surface2); border-radius: 12px; padding: 18px; min-width: 180px; }
+        .exp-tools-title { font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+        .exp-tool-pills { display: flex; flex-wrap: wrap; gap: 7px; }
+        .exp-tool-pill {
+            font-size: 0.72rem;
+            padding: 4px 10px;
+            border-radius: 6px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--muted);
+        }
+
+        /* ── Skills / Hexagon-style bars ── */
+        .skills-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+        @media (max-width: 900px) { .skills-layout { grid-template-columns: 1fr; } }
+        .skill-bars { display: flex; flex-direction: column; gap: 18px; }
+        .skill-bar-row { display: flex; flex-direction: column; gap: 6px; }
+        .skill-bar-header { display: flex; justify-content: space-between; align-items: center; }
+        .skill-bar-label { font-size: 0.85rem; font-weight: 500; }
+        .skill-bar-pct { font-family: 'Syne', sans-serif; font-size: 0.85rem; font-weight: 700; color: var(--accent); }
+        .skill-track {
+            height: 6px;
+            background: var(--surface2);
+            border-radius: 100px;
+            overflow: hidden;
+        }
+        .skill-fill {
+            height: 100%;
+            border-radius: 100px;
+            background: linear-gradient(90deg, var(--accent2), var(--accent));
+            width: 0%;
+            transition: width 1.2s cubic-bezier(0.16,1,0.3,1);
+        }
+
+        /* ── Tools Grid ── */
+        .tools-filter-bar { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
+        .tool-filter {
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            padding: 6px 16px;
+            border-radius: 100px;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .tool-filter.active, .tool-filter:hover {
+            background: var(--accent2);
+            border-color: var(--accent2);
+            color: #fff;
+        }
+        .tools-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+        @media (max-width: 640px) { .tools-grid { grid-template-columns: repeat(2, 1fr); } }
+        .tool-item {
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 14px 16px;
+            transition: border-color 0.2s;
+        }
+        .tool-item:hover { border-color: rgba(59,130,246,0.3); }
+        .tool-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+        .tool-desc { font-size: 0.75rem; color: var(--muted); margin-top: 3px; }
+
+        /* ── Divider ── */
+        .divider { height: 1px; background: var(--border); margin: 0; }
+
+        /* ── Contact / Footer ── */
+        #contact {
+            background: var(--surface);
+            border-top: 1px solid var(--border);
+        }
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
+        @media (max-width: 768px) { .contact-grid { grid-template-columns: 1fr; gap: 40px; } }
+        .contact-links { display: flex; flex-direction: column; gap: 16px; }
+        .contact-link {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            text-decoration: none;
+            color: var(--muted);
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .contact-link:hover { color: var(--text); }
+        .contact-link-icon {
+            width: 40px; height: 40px;
+            border-radius: 10px;
+            background: var(--surface2);
+            border: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem;
+            flex-shrink: 0;
+        }
+        .cta-box {
+            background: linear-gradient(135deg, rgba(249,115,22,0.12), rgba(59,130,246,0.08));
+            border: 1px solid rgba(249,115,22,0.2);
+            border-radius: 16px;
+            padding: 32px;
+        }
+        .cta-title { font-family: 'Syne', sans-serif; font-size: 1.4rem; font-weight: 800; margin-bottom: 10px; }
+        .cta-desc { font-size: 0.88rem; color: var(--muted); margin-bottom: 20px; }
+        .btn-cta {
+            display: inline-block;
+            background: var(--accent);
+            color: #fff;
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            padding: 12px 28px;
             border-radius: 8px;
-            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            text-decoration: none;
+            transition: opacity 0.2s, transform 0.2s;
         }
+        .btn-cta:hover { opacity: 0.88; transform: translateY(-2px); }
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            margin-top: 48px;
+            padding-top: 24px;
+            font-size: 0.78rem;
+            color: var(--muted);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 8px;
+        }
+
+        /* ── Scroll animations ── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+        .reveal.visible { opacity: 1; transform: translateY(0); }
+
+        /* ── Custom scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--bg); }
+        ::-webkit-scrollbar-thumb { background: #2a2f42; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3d4460; }
+
+        /* ── alt section bg ── */
+        .bg-alt { background: var(--surface); }
+
+        /* ── Grid helpers ── */
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        @media (max-width: 900px) { .grid-2 { grid-template-columns: 1fr; } }
     </style>
 </head>
-<body class="antialiased">
+<body>
 
-    <div id="lightbox" onclick="closeLightbox()">
-        <button class="absolute top-10 right-10 text-white text-4xl font-light">&times;</button>
-        <img id="lightboxImg" src="" alt="Full size preview">
-    </div>
+    <!-- Background orbs -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
 
-    <nav class="sticky top-0 z-50 bg-brand-bg/90 backdrop-blur-md border-b border-gray-200">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between items-center h-16">
-                <div class="flex-shrink-0 flex items-center">
-                    <span class="text-2xl font-bold tracking-tight text-brand-primary">YG<span class="text-brand-accent">.</span></span>
-                </div>
-                <div class="hidden md:flex space-x-8">
-                    <a href="#overview" class="nav-link text-sm font-medium text-gray-700 hover:text-brand-primary">Overview</a>
-                    <a href="#experience" class="nav-link text-sm font-medium text-gray-700 hover:text-brand-primary">Experience</a>
-                    <a href="#portfolio" class="nav-link text-sm font-medium text-gray-700 hover:text-brand-primary font-bold text-brand-accent">Work Samples</a>
-                    <a href="#skills" class="nav-link text-sm font-medium text-gray-700 hover:text-brand-primary">Skills</a>
-                </div>
-                <a href="#contact" class="px-4 py-2 text-sm font-medium rounded-md text-white bg-brand-primary hover:bg-brand-secondary transition-all">Contact</a>
+    <!-- ── Navigation ── -->
+    <nav>
+        <div class="nav-inner">
+            <div class="logo">YG<span>.</span></div>
+            <div class="nav-links">
+                <a href="#overview">Overview</a>
+                <a href="#services">Services</a>
+                <a href="#impact">Impact</a>
+                <a href="#experience">Experience</a>
+                <a href="#skills">Skills</a>
             </div>
+            <a href="#contact" class="btn-nav">Let's Talk</a>
+        </div>
+        <div class="nav-mobile">
+            <a href="#overview">Home</a>
+            <a href="#services">Services</a>
+            <a href="#impact">Impact</a>
+            <a href="#experience">Work</a>
+            <a href="#contact">Contact</a>
         </div>
     </nav>
 
-    <section id="overview" class="pt-20 pb-16">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h1 class="text-5xl lg:text-7xl font-bold text-gray-900 mb-6">Yashraj Gaur</h1>
-            <p class="text-xl sm:text-2xl text-gray-600 max-w-3xl mx-auto mb-12 font-light">
-                Senior SMM Specialist. Managing <span class="text-brand-primary font-medium">$100k+ budgets</span> and scaling communities to <span class="text-brand-accent font-medium">200k+ followers</span>.
+    <!-- ── Hero ── -->
+    <section id="overview">
+        <div class="container">
+            <div class="hero-badge">Available for New Projects</div>
+            <h1>Yashraj <span class="accent-text">Gaur</span></h1>
+            <p class="hero-sub">
+                Senior SMM Specialist &amp; Digital Growth Strategist with <strong style="color:var(--text)">6+ years</strong> turning brands into communities — through strategy, automation, and data-driven content.
             </p>
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                <div class="glass-card p-8"><div class="text-4xl font-bold text-brand-primary">200K+</div><div class="text-xs uppercase mt-2 text-gray-500">IG Growth, Telegram, Facebook, Linkdin, TikTok</div></div>
-                <div class="glass-card p-8"><div class="text-4xl font-bold text-brand-accent">Focus on Organic Growth</div><div class="text-xs uppercase mt-2 text-gray-500">Annual Ad Spend</div></div>
-                <div class="glass-card p-8"><div class="text-4xl font-bold text-gray-800">5+ Yrs</div><div class="text-xs uppercase mt-2 text-gray-500">Expertise</div></div>
-            </div>
-        </div>
-    </section>
 
-    <section id="impact" class="py-16 bg-white border-y border-gray-100">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12">
-            <div class="glass-card p-6">
-                <h3 class="font-bold mb-4">Community Scaling (1XBET)</h3>
-                <div class="chart-container"><canvas id="growthChart"></canvas></div>
-            </div>
-            <div class="glass-card p-6">
-                <h3 class="font-bold mb-4">Ad Optimization Strategy</h3>
-                <div class="chart-container"><canvas id="roiChart"></canvas></div>
-            </div>
-        </div>
-    </section>
-
-    <section id="portfolio" class="py-20 bg-brand-bg">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-gray-900">Work Portfolio</h2>
-                <p class="text-gray-500 mt-4">Click any image to expand. Designs focus on conversion and high-stakes branding.</p>
+            <div class="hero-tags">
+                <span class="tag blue">Social Media Strategy</span>
+                <span class="tag orange">Content Creation</span>
+                <span class="tag green">Telegram Bots</span>
+                <span class="tag purple">Email &amp; Mailing</span>
+                <span class="tag blue">Affiliate Funnels</span>
+                <span class="tag orange">Paid Campaigns</span>
+                <span class="tag green">Analytics &amp; ROI</span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                
-                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('for sm.png')">
-                    <img src="for sm.png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="Winter Spinsation">
-                    <div class="p-6">
-                        <span class="text-orange-500 text-xs font-bold tracking-widest uppercase">Casino Campaign</span>
-                        <h4 class="font-bold text-lg mt-1">Winter Spinsation Campaign</h4>
-                    </div>
+            <div class="stats-grid reveal">
+                <div class="stat-card">
+                    <div class="stat-num accent-text">200K+</div>
+                    <div class="stat-label">Instagram Followers Scaled</div>
                 </div>
-
-                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('GOLD & GLORY.png')">
-                    <img src="GOLD & GLORY.png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="BBL Gold Glory">
-                    <div class="p-6">
-                        <span class="text-blue-500 text-xs font-bold tracking-widest uppercase">Cricket Promotion</span>
-                        <h4 class="font-bold text-lg mt-1">BBL Gold & Glory Tournament</h4>
-                    </div>
+                <div class="stat-card">
+                    <div class="stat-num" style="color:var(--accent3)">$100K+</div>
+                    <div class="stat-label">Monthly Ad Budget Managed</div>
                 </div>
-
-                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('4in1 1200x600.png')">
-                    <img src="4in1 1200x600.png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="Matchday Preview">
-                    <div class="p-6">
-                        <span class="text-green-600 text-xs font-bold tracking-widest uppercase">Analytics Layout</span>
-                        <h4 class="font-bold text-lg mt-1">Multi-Match Odds Preview</h4>
-                    </div>
-                </div>
-
-                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('20 mail 1200x600.png')">
-                    <img src="20 mail 1200x600.png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="No Risk Bet">
-                    <div class="p-6">
-                        <span class="text-orange-500 text-xs font-bold tracking-widest uppercase">Product Feature</span>
-                        <h4 class="font-bold text-lg mt-1">"No Risk Bet" Product Spotlight</h4>
-                    </div>
-                </div>
-
-                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('INDCRIC (6).png')">
-                    <img src="INDCRIC (6).png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="Premier League">
-                    <div class="p-6">
-                        <span class="text-blue-500 text-xs font-bold tracking-widest uppercase">League Strategy</span>
-                        <h4 class="font-bold text-lg mt-1">Premier League Engagement</h4>
-                    </div>
-                </div>
-
-                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('start league.jpg')">
-                    <img src="start league.jpg" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="Star League">
-                    <div class="p-6">
-                        <span class="text-purple-500 text-xs font-bold tracking-widest uppercase">UX Promo</span>
-                        <h4 class="font-bold text-lg mt-1">Champions Star League UI</h4>
-                    </div>
-                </div>
-
-                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('1200x600 (2).png')">
-                    <img src="1200x600 (2).png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="La Liga">
-                    <div class="p-6">
-                        <span class="text-red-500 text-xs font-bold tracking-widest uppercase">Football Odds</span>
-                        <h4 class="font-bold text-lg mt-1">Real Sociedad vs Barcelona</h4>
-                    </div>
-                </div>
-
-                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('PROMOCODE - INDCRIC (7).png')">
-                    <img src="PROMOCODE - INDCRIC (7).png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="India vs NZ">
-                    <div class="p-6">
-                        <span class="text-blue-500 text-xs font-bold tracking-widest uppercase">Affiliate Marketing</span>
-                        <h4 class="font-bold text-lg mt-1">India vs New Zealand Promo</h4>
-                    </div>
-                </div>
-
-                <div class="glass-card overflow-hidden cursor-zoom-in group" onclick="openLightbox('PROMOCODE - INDCRIC (4).png')">
-                    <img src="PROMOCODE - INDCRIC (4).png" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" alt="Multi League">
-                    <div class="p-6">
-                        <span class="text-green-600 text-xs font-bold tracking-widest uppercase">Data Viz</span>
-                        <h4 class="font-bold text-lg mt-1">Global Matchday Summary</h4>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
-    <section id="experience" class="py-20 bg-white">
-        <div class="max-w-4xl mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-12 text-center">Professional Experience</h2>
-            <div class="space-y-8">
-                <div class="border-l-4 border-brand-primary pl-6 py-2">
-                    <h4 class="text-xl font-bold">Senior SMM Specialist</h4>
-                    <div class="text-brand-primary font-medium">1XBET (Russia/Global) | 2022 - Present (Looking For Opportunities)</div>
-                    <p class="mt-2 text-gray-600">Scaled flagship Instagram from 0 to 200k+ followers. Managed $100k+ monthly ad spend on Meta.</p>
-                </div>
-                <div class="border-l-4 border-gray-300 pl-6 py-2">
-                    <h4 class="text-xl font-bold">Social Media Manager</h4>
-                    <div class="text-gray-500 font-medium">Loco (Delhi, India) | 2022 - 2023</div>
-                    <p class="mt-2 text-gray-600">Orchestrated content strategies for gaming communities and streaming growth.</p>
+                <div class="stat-card">
+                    <div class="stat-num accent2-text">6+</div>
+                    <div class="stat-label">Years Experience</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="skills" class="py-20 bg-brand-bg">
-        <div class="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-                <h2 class="text-3xl font-bold mb-6">Expertise Matrix</h2>
-                <p class="text-gray-600 mb-8">Balancing creative flair with analytical precision to drive ROI.</p>
-                <div class="grid grid-cols-2 gap-4">
-                    <div class="p-4 bg-white rounded shadow-sm">Meta Ads Expert, SEMrush, Buffer</div>
-                    <div class="p-4 bg-white rounded shadow-sm">ROI Optimization</div>
-                    <div class="p-4 bg-white rounded shadow-sm">Global Branding, CANVA, ADOBE CC, Inshot</div>
-                    <div class="p-4 bg-white rounded shadow-sm">Data Analytics</div>
-                </div>
+    <div class="divider"></div>
+
+    <!-- ── Services ── -->
+    <section id="services" class="bg-alt">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="section-label">What I Do</div>
+                <h2 class="section-title">Full-Stack Digital <span class="accent-text">Growth Services</span></h2>
+                <p class="section-desc muted">From organic content to automated funnels — every layer of your digital presence, handled with precision.</p>
             </div>
-            <div class="glass-card p-6 h-[400px]">
-                <canvas id="skillsChart"></canvas>
+
+            <div class="services-grid">
+                <!-- 1. Social Media & Content -->
+                <div class="service-card reveal">
+                    <div class="service-icon" style="background:rgba(249,115,22,0.12);">📱</div>
+                    <div class="service-title">Social Media &amp; Content Creation</div>
+                    <div class="service-desc">
+                        End-to-end management of social channels — scripted reels, carousels, stories, and viral hooks crafted for platform algorithms. I develop content calendars, visual identity guidelines, and engagement playbooks that keep audiences active and growing month over month.
+                    </div>
+                    <div class="service-pills">
+                        <span class="service-pill">Instagram Reels</span>
+                        <span class="service-pill">Content Calendar</span>
+                        <span class="service-pill">Copywriting</span>
+                        <span class="service-pill">Community Mgmt</span>
+                        <span class="service-pill">Brand Voice</span>
+                        <span class="service-pill">Trend Surfing</span>
+                    </div>
+                </div>
+
+                <!-- 2. Mailing Campaigns -->
+                <div class="service-card reveal">
+                    <div class="service-icon" style="background:rgba(59,130,246,0.12);">✉️</div>
+                    <div class="service-title">Email &amp; Mailing Campaigns</div>
+                    <div class="service-desc">
+                        Full-lifecycle email marketing — from list segmentation and template design to A/B testing subject lines and analysing open/click rates. I craft drip sequences, promotional blasts, and re-engagement flows that convert cold subscribers into loyal customers.
+                    </div>
+                    <div class="service-pills">
+                        <span class="service-pill">Drip Sequences</span>
+                        <span class="service-pill">A/B Testing</span>
+                        <span class="service-pill">Segmentation</span>
+                        <span class="service-pill">MailChimp</span>
+                        <span class="service-pill">SendGrid</span>
+                        <span class="service-pill">Open Rate CRO</span>
+                    </div>
+                </div>
+
+                <!-- 3. Telegram Bots -->
+                <div class="service-card reveal">
+                    <div class="service-icon" style="background:rgba(16,185,129,0.12);">🤖</div>
+                    <div class="service-title">Telegram Bots &amp; Automation</div>
+                    <div class="service-desc">
+                        Custom Telegram bot development for community management, lead capture, auto-posting, subscription gates, and support automation. Scaled a Telegram channel to 33K+ members using bot-assisted onboarding flows, scheduled content, and automated response systems.
+                    </div>
+                    <div class="service-pills">
+                        <span class="service-pill">Bot Architecture</span>
+                        <span class="service-pill">Auto-posting</span>
+                        <span class="service-pill">Lead Capture</span>
+                        <span class="service-pill">Sub Gates</span>
+                        <span class="service-pill">Channel Growth</span>
+                        <span class="service-pill">Moderation Bots</span>
+                    </div>
+                </div>
+
+                <!-- 4. Affiliate Landing Pages -->
+                <div class="service-card reveal">
+                    <div class="service-icon" style="background:rgba(167,139,250,0.12);">🎯</div>
+                    <div class="service-title">Affiliate Partner Landing Pages</div>
+                    <div class="service-desc">
+                        High-converting affiliate and partner landing pages built for specific traffic sources — GEO-targeted copy, pixel-ready tracking, fast load times, and compliance-friendly designs. Experience running affiliate campaigns for regulated iGaming brands in competitive global markets.
+                    </div>
+                    <div class="service-pills">
+                        <span class="service-pill">Landing Page Design</span>
+                        <span class="service-pill">UTM Tracking</span>
+                        <span class="service-pill">GEO Targeting</span>
+                        <span class="service-pill">Pixel Setup</span>
+                        <span class="service-pill">iGaming Affiliate</span>
+                        <span class="service-pill">Conversion CRO</span>
+                    </div>
+                </div>
+
+                <!-- 5. Paid Campaigns -->
+                <div class="service-card reveal">
+                    <div class="service-icon" style="background:rgba(249,115,22,0.12);">📊</div>
+                    <div class="service-title">Paid Campaign Management</div>
+                    <div class="service-desc">
+                        Strategically managing $100K+ monthly budgets across Meta Ads, Google Ads, and programmatic networks. Full-funnel campaign architecture from audience research and creative testing to bid optimisation and weekly performance reporting.
+                    </div>
+                    <div class="service-pills">
+                        <span class="service-pill">Meta Ads</span>
+                        <span class="service-pill">Google Ads</span>
+                        <span class="service-pill">Retargeting</span>
+                        <span class="service-pill">Lookalike Audiences</span>
+                        <span class="service-pill">Creative Testing</span>
+                        <span class="service-pill">Bid Strategy</span>
+                    </div>
+                </div>
+
+                <!-- 6. Analytics & Strategy -->
+                <div class="service-card reveal">
+                    <div class="service-icon" style="background:rgba(59,130,246,0.12);">📈</div>
+                    <div class="service-title">Analytics &amp; Growth Strategy</div>
+                    <div class="service-desc">
+                        Data-first approach to every campaign — building dashboards, interpreting cohort data, and translating numbers into actionable strategy shifts. Reputation management on Reddit, Quora, and review platforms to protect and build brand trust internationally.
+                    </div>
+                    <div class="service-pills">
+                        <span class="service-pill">GA4</span>
+                        <span class="service-pill">SEMrush</span>
+                        <span class="service-pill">Reputation Mgmt</span>
+                        <span class="service-pill">Data Dashboards</span>
+                        <span class="service-pill">Competitive Intel</span>
+                        <span class="service-pill">ORM</span>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
 
-    <footer id="contact" class="bg-brand-secondary text-white py-20">
-        <div class="max-w-7xl mx-auto px-4 text-center">
-            <h2 class="text-3xl font-bold mb-8">Let's Connect</h2>
-            <div class="flex flex-wrap justify-center gap-8 text-lg mb-12">
-                <a href="mailto:officialyashyrg@gmail.com" class="hover:text-brand-accent transition-colors">officialyashyrg@gmail.com</a>
-                <a href="tel:7697605145" class="hover:text-brand-accent transition-colors">+91 7697605145</a>
-                <a href="https://www.linkedin.com/in/yashraj-gaur02/" class="hover:text-brand-accent transition-colors">LinkedIn</a>
-            </div>
-            <p class="text-gray-500 text-sm">© 2026 Yashraj Gaur. Senior SMM Specialist.</p>
-        </div>
-    </footer>
+    <div class="divider"></div>
 
+    <!-- ── Impact Dashboard ── -->
+    <section id="impact">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="section-label">Proof of Work</div>
+                <h2 class="section-title">The Growth <span class="accent-text">Engine</span></h2>
+                <p class="section-desc muted">Visual breakdown of key achievements across platforms — from zero to community at scale.</p>
+            </div>
+
+            <div class="grid-2">
+                <!-- Growth Chart -->
+                <div class="chart-card reveal">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <div class="chart-label">Community Scaling — 1XBET</div>
+                        <span style="font-size:0.72rem; padding:3px 10px; border-radius:100px; background:var(--surface2); color:var(--muted); border:1px solid var(--border);">2022 – Present</span>
+                    </div>
+                    <div class="chart-note">Instagram scaled from 0 → 200K+ &amp; Telegram to 33K+ members organically.</div>
+                    <div class="chart-container">
+                        <canvas id="growthChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- ROI Chart -->
+                <div class="chart-card reveal">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                        <div class="chart-label">Strategic Optimisation</div>
+                        <div class="toggle-group">
+                            <button class="toggle-btn active" onclick="updateRoiChart('optimization')">ROI View</button>
+                            <button class="toggle-btn" onclick="updateRoiChart('allocation')">Budget Split</button>
+                        </div>
+                    </div>
+                    <div id="roiText" class="chart-note">Leveraging full analytics stack — Meta Ads, GA4, SEMrush — to drive consistent ROI growth.</div>
+                    <div class="chart-container">
+                        <canvas id="roiChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Extra metrics row -->
+            <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:16px; margin-top:20px;" class="reveal">
+                <div class="stat-card" style="border-color:rgba(249,115,22,0.2);">
+                    <div class="stat-num" style="color:var(--accent); font-size:1.8rem;">33K+</div>
+                    <div class="stat-label">Telegram Members</div>
+                </div>
+                <div class="stat-card" style="border-color:rgba(59,130,246,0.2);">
+                    <div class="stat-num" style="color:var(--accent2); font-size:1.8rem;">350%</div>
+                    <div class="stat-label">Peak ROI Improvement</div>
+                </div>
+                <div class="stat-card" style="border-color:rgba(16,185,129,0.2);">
+                    <div class="stat-num" style="color:var(--accent3); font-size:1.8rem;">15+</div>
+                    <div class="stat-label">Bot Automations Built</div>
+                </div>
+                <div class="stat-card" style="border-color:rgba(167,139,250,0.2);">
+                    <div class="stat-num" style="color:#A78BFA; font-size:1.8rem;">50+</div>
+                    <div class="stat-label">Affiliate Campaigns Run</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Experience ── -->
+    <section id="experience" class="bg-alt">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="section-label">Professional Journey</div>
+                <h2 class="section-title">6+ Years of <span class="accent-text">Real Impact</span></h2>
+            </div>
+
+            <div class="exp-grid">
+                <!-- Role 1 -->
+                <div class="exp-card reveal" style="border-left:3px solid var(--accent);">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Senior SMM Specialist</div>
+                            <div class="exp-company accent-text">1XBET (Global)</div>
+                        </div>
+                        <span class="exp-date">Jun 2022 – Present</span>
+                    </div>
+                    <div class="exp-body">
+                        <ul class="exp-list">
+                            <li><strong>Exponential Growth:</strong> Scaled Instagram from 0 → 200K+ and Telegram to 33K+ via organic + paid strategy.</li>
+                            <li><strong>Budget Management:</strong> Managed $100K+ monthly ad spend across Meta, Google, and programmatic networks.</li>
+                            <li><strong>Telegram Automation:</strong> Built and deployed 15+ Telegram bots for onboarding, auto-posting, lead capture, and moderation.</li>
+                            <li><strong>Mailing Campaigns:</strong> Designed and executed high-CTR email drip campaigns and promotional blasts for multi-GEO audiences.</li>
+                            <li><strong>Affiliate Funnels:</strong> Created GEO-targeted affiliate landing pages and tracked funnel performance via UTM + pixel stack.</li>
+                            <li><strong>Reputation Management:</strong> Proactively managed brand sentiment on Reddit, Quora, and review platforms globally.</li>
+                            <li><strong>Content Strategy:</strong> Led content calendar, visual identity, and creator partnerships across all channels.</li>
+                        </ul>
+                        <div class="exp-tools">
+                            <div class="exp-tools-title">Tools Used</div>
+                            <div class="exp-tool-pills">
+                                <span class="exp-tool-pill">Meta Ads</span>
+                                <span class="exp-tool-pill">GA4</span>
+                                <span class="exp-tool-pill">SEMrush</span>
+                                <span class="exp-tool-pill">Telegram API</span>
+                                <span class="exp-tool-pill">MailChimp</span>
+                                <span class="exp-tool-pill">SendGrid</span>
+                                <span class="exp-tool-pill">Reddit/Quora</span>
+                                <span class="exp-tool-pill">Adobe CC</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Role 2 -->
+                <div class="exp-card reveal" style="border-left:3px solid var(--accent2);">
+                    <div class="exp-header">
+                        <div>
+                            <div class="exp-role">Social Media Manager</div>
+                            <div class="exp-company accent2-text">Loco (Delhi, India)</div>
+                        </div>
+                        <span class="exp-date">Feb 2022 – Oct 2023</span>
+                    </div>
+                    <div class="exp-body">
+                        <ul class="exp-list">
+                            <li><strong>Content Operations:</strong> Streamlined daily multi-platform posting schedules using Hootsuite and Sprout Social.</li>
+                            <li><strong>Brand Alignment:</strong> Aligned social strategies directly with company OKRs and product launch timelines.</li>
+                            <li><strong>Community Engagement:</strong> Managed moderation and audience interaction, maintaining high engagement rates.</li>
+                            <li><strong>Campaign Execution:</strong> Ran seasonal paid campaigns and influencer collaborations for gaming &amp; esports audiences.</li>
+                            <li><strong>Content Creation:</strong> Produced daily creative assets — graphics, short-form video, and live event coverage.</li>
+                        </ul>
+                        <div class="exp-tools">
+                            <div class="exp-tools-title">Tools Used</div>
+                            <div class="exp-tool-pills">
+                                <span class="exp-tool-pill">Hootsuite</span>
+                                <span class="exp-tool-pill">Sprout Social</span>
+                                <span class="exp-tool-pill">Buffer</span>
+                                <span class="exp-tool-pill">Canva</span>
+                                <span class="exp-tool-pill">Adobe Premiere</span>
+                                <span class="exp-tool-pill">Google Analytics</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Skills & Tools ── -->
+    <section id="skills">
+        <div class="container">
+            <div class="section-head reveal">
+                <div class="section-label">Core Competencies</div>
+                <h2 class="section-title">Skills &amp; <span class="accent-text">Tech Stack</span></h2>
+            </div>
+
+            <div class="skills-layout">
+                <!-- Skill Bars -->
+                <div>
+                    <div class="skill-bars" id="skillBars">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+
+                <!-- Tools -->
+                <div>
+                    <div class="tools-filter-bar">
+                        <button class="tool-filter active" onclick="filterTools('all', this)">All</button>
+                        <button class="tool-filter" onclick="filterTools('analytics', this)">Analytics</button>
+                        <button class="tool-filter" onclick="filterTools('management', this)">Management</button>
+                        <button class="tool-filter" onclick="filterTools('content', this)">Content</button>
+                        <button class="tool-filter" onclick="filterTools('automation', this)">Automation</button>
+                    </div>
+                    <div class="tools-grid" id="toolsGrid">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Radar Chart -->
+            <div style="max-width:480px; margin:60px auto 0;" class="reveal">
+                <div style="text-align:center; margin-bottom:20px;">
+                    <div class="section-label" style="display:inline-block;">Competency Radar</div>
+                </div>
+                <div class="chart-container" style="background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:16px;">
+                    <canvas id="skillsChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Contact ── -->
+    <section id="contact">
+        <div class="container">
+            <div class="contact-grid">
+                <div>
+                    <div class="section-label">Get In Touch</div>
+                    <h2 class="section-title" style="margin-bottom:20px;">Ready to <span class="accent-text">Scale</span> Your Brand?</h2>
+                    <p style="color:var(--muted); font-size:0.9rem; margin-bottom:32px;">With 6+ years managing high-budget campaigns, building massive communities, and shipping automated growth systems — I'm ready to bring results to your team.</p>
+                    <div class="contact-links">
+                        <a href="mailto:officialyashyrg@gmail.com" class="contact-link">
+                            <div class="contact-link-icon">✉️</div>
+                            <span>officialyashyrg@gmail.com</span>
+                        </a>
+                        <a href="tel:+917697605145" class="contact-link">
+                            <div class="contact-link-icon">📞</div>
+                            <span>+91 7697605145</span>
+                        </a>
+                        <a href="https://www.linkedin.com/in/yashraj-gaur02/" target="_blank" class="contact-link">
+                            <div class="contact-link-icon">🔗</div>
+                            <span>linkedin.com/in/yashraj-gaur02</span>
+                        </a>
+                        <a href="https://t.me/yashrajgaur" class="contact-link">
+                            <div class="contact-link-icon">✈️</div>
+                            <span>Telegram: @yashrajgaur</span>
+                        </a>
+                    </div>
+                </div>
+                <div>
+                    <div class="cta-box">
+                        <div class="cta-title">Let's Build Something Together</div>
+                        <div class="cta-desc">Whether you need a complete social media overhaul, Telegram automation, affiliate funnels, or mailing campaigns — let's talk about what growth means for your brand.</div>
+                        <a href="mailto:officialyashyrg@gmail.com" class="btn-cta">Send a Message →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <span>📍 Location: As Per Requirement</span>
+                <span>&copy; 2025 Yashraj Gaur — MBA (Information Technology)</span>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ── JavaScript ── -->
     <script>
-        // Lightbox Functions
-        function openLightbox(src) {
-            document.getElementById('lightboxImg').src = src;
-            document.getElementById('lightbox').style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Prevent scrolling
-        }
+        // ── Data ──────────────────────────────────────────────────────────────
+        const skillsData = [
+            { label: 'Social Media Strategy',    pct: 95 },
+            { label: 'Content Creation',          pct: 90 },
+            { label: 'Paid Advertising (Meta/Google)', pct: 88 },
+            { label: 'Telegram Bots & Automation', pct: 80 },
+            { label: 'Email & Mailing Campaigns', pct: 85 },
+            { label: 'Analytics & Data',          pct: 90 },
+            { label: 'Affiliate Funnels',          pct: 80 },
+            { label: 'Community Management',       pct: 95 },
+        ];
 
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-            document.body.style.overflow = 'auto'; // Re-enable scrolling
-        }
+        const toolsData = [
+            { name: 'Meta Ads Manager',      category: 'analytics',   desc: 'Campaign setup & ROI' },
+            { name: 'Google Analytics 4',    category: 'analytics',   desc: 'Traffic & conversion' },
+            { name: 'SEMrush',               category: 'analytics',   desc: 'SEO & competitor intel' },
+            { name: 'Looker Studio',         category: 'analytics',   desc: 'Custom dashboards' },
+            { name: 'Hootsuite',             category: 'management',  desc: 'Scheduling & listening' },
+            { name: 'Sprout Social',         category: 'management',  desc: 'Reporting & publishing' },
+            { name: 'Buffer',                category: 'management',  desc: 'Queue management' },
+            { name: 'Notion',                category: 'management',  desc: 'Content planning' },
+            { name: 'Adobe Creative Suite',  category: 'content',     desc: 'Visual asset creation' },
+            { name: 'Canva Pro',             category: 'content',     desc: 'Rapid design & creatives' },
+            { name: 'CapCut / Premiere',     category: 'content',     desc: 'Short-form video editing' },
+            { name: 'Copywriting',           category: 'content',     desc: 'Ad copy & captions' },
+            { name: 'Telegram Bot API',      category: 'automation',  desc: 'Custom bot development' },
+            { name: 'MailChimp',             category: 'automation',  desc: 'Email drip campaigns' },
+            { name: 'SendGrid',              category: 'automation',  desc: 'Transactional email' },
+            { name: 'Zapier',                category: 'automation',  desc: 'Workflow automation' },
+            { name: 'Influencer Marketing',  category: 'content',     desc: 'Partnership management' },
+            { name: 'Pixel / UTM Setup',     category: 'analytics',   desc: 'Tracking & attribution' },
+        ];
 
-        // --- CHARTS ---
+        // ── Skill Bars ────────────────────────────────────────────────────────
+        const barsContainer = document.getElementById('skillBars');
+        skillsData.forEach(s => {
+            barsContainer.innerHTML += `
+                <div class="skill-bar-row reveal">
+                    <div class="skill-bar-header">
+                        <span class="skill-bar-label">${s.label}</span>
+                        <span class="skill-bar-pct">${s.pct}%</span>
+                    </div>
+                    <div class="skill-track">
+                        <div class="skill-fill" data-pct="${s.pct}"></div>
+                    </div>
+                </div>`;
+        });
+
+        // ── Tools Filter ──────────────────────────────────────────────────────
+        function filterTools(category, btn) {
+            document.querySelectorAll('.tool-filter').forEach(b => b.classList.remove('active'));
+            if (btn) btn.classList.add('active');
+
+            const filtered = category === 'all' ? toolsData : toolsData.filter(t => t.category === category);
+            document.getElementById('toolsGrid').innerHTML = filtered.map(t => `
+                <div class="tool-item">
+                    <div class="tool-name">${t.name}</div>
+                    <div class="tool-desc">${t.desc}</div>
+                </div>`).join('');
+        }
+        filterTools('all');
+
+        // ── Charts ────────────────────────────────────────────────────────────
+        Chart.defaults.color = '#7C85A2';
+        Chart.defaults.borderColor = 'rgba(255,255,255,0.06)';
+
         // 1. Growth Chart
         const ctxGrowth = document.getElementById('growthChart').getContext('2d');
         new Chart(ctxGrowth, {
             type: 'line',
             data: {
-                labels: ['Start', 'Q3 2022', 'Q1 2023', 'Q3 2023', 'Present'],
-                datasets: [{
-                    label: 'Followers Growth',
-                    data: [0, 45000, 110000, 165000, 200000],
-                    borderColor: '#ED8936',
-                    tension: 0.4,
-                    fill: true,
-                    backgroundColor: 'rgba(237, 137, 54, 0.1)'
-                }]
+                labels: ['Start', 'Q3 2022', 'Q1 2023', 'Q3 2023', 'Q1 2024', 'Present'],
+                datasets: [
+                    {
+                        label: 'Instagram Followers',
+                        data: [0, 45000, 110000, 160000, 185000, 200000],
+                        borderColor: '#F97316',
+                        backgroundColor: 'rgba(249,115,22,0.08)',
+                        tension: 0.4, fill: true, yAxisID: 'y',
+                        pointBackgroundColor: '#F97316', pointRadius: 4
+                    },
+                    {
+                        label: 'Telegram Members',
+                        data: [0, 5000, 14000, 22000, 28000, 33000],
+                        borderColor: '#3B82F6',
+                        backgroundColor: 'rgba(59,130,246,0.08)',
+                        tension: 0.4, fill: true, yAxisID: 'y1',
+                        pointBackgroundColor: '#3B82F6', pointRadius: 4
+                    }
+                ]
             },
-            options: { maintainAspectRatio: false }
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: {
+                    legend: { position: 'top', labels: { usePointStyle: true, boxWidth: 8, padding: 14 } },
+                    tooltip: {
+                        backgroundColor: '#161B2E',
+                        borderColor: 'rgba(255,255,255,0.08)',
+                        borderWidth: 1,
+                        callbacks: {
+                            label: ctx => ` ${ctx.dataset.label}: ${new Intl.NumberFormat('en-US').format(ctx.parsed.y)}`
+                        }
+                    }
+                },
+                scales: {
+                    y:  { type: 'linear', position: 'left',  title: { display: true, text: 'Instagram' }, grid: { display: false } },
+                    y1: { type: 'linear', position: 'right', title: { display: true, text: 'Telegram' } },
+                    x:  { grid: { display: false } }
+                }
+            }
         });
 
-        // 2. ROI Chart
+        // 2. ROI/Allocation Chart
         const ctxRoi = document.getElementById('roiChart').getContext('2d');
-        new Chart(ctxRoi, {
+        let roiChart = new Chart(ctxRoi, {
             type: 'bar',
             data: {
-                labels: ['FB Ads', 'IG Ads', 'Telegram', 'Reddit'],
+                labels: ['Month 1', 'Month 3', 'Month 6', 'Month 12'],
                 datasets: [{
-                    label: 'Efficiency Index',
-                    data: [85, 95, 70, 60],
-                    backgroundColor: '#2B6CB0'
+                    label: 'Campaign ROI Improvement (%)',
+                    data: [100, 140, 210, 350],
+                    backgroundColor: ['rgba(59,130,246,0.7)', 'rgba(59,130,246,0.75)', 'rgba(249,115,22,0.75)', 'rgba(249,115,22,0.9)'],
+                    borderRadius: 6
                 }]
             },
-            options: { maintainAspectRatio: false }
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#161B2E',
+                        borderColor: 'rgba(255,255,255,0.08)',
+                        borderWidth: 1
+                    }
+                },
+                scales: {
+                    y: { beginAtZero: true },
+                    x: { grid: { display: false } }
+                }
+            }
         });
 
-        // 3. Skills Radar
+        function updateRoiChart(mode) {
+            const textField = document.getElementById('roiText');
+            const btns = document.querySelectorAll('.toggle-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (mode === 'optimization') {
+                roiChart.config.type = 'bar';
+                roiChart.data.labels = ['Month 1', 'Month 3', 'Month 6', 'Month 12'];
+                roiChart.data.datasets = [{
+                    label: 'Campaign ROI Improvement (%)',
+                    data: [100, 140, 210, 350],
+                    backgroundColor: ['rgba(59,130,246,0.7)','rgba(59,130,246,0.75)','rgba(249,115,22,0.75)','rgba(249,115,22,0.9)'],
+                    borderRadius: 6
+                }];
+                textField.innerText = 'Full analytics stack (Meta Ads, GA4, SEMrush) used to optimise, showing consistent ROI growth over 12 months.';
+            } else {
+                roiChart.config.type = 'doughnut';
+                roiChart.data.labels = ['Meta Ads', 'Influencers', 'Google Ads', 'Content & Bots'];
+                roiChart.data.datasets = [{
+                    data: [45, 25, 20, 10],
+                    backgroundColor: ['#3B82F6','#F97316','#10B981','#A78BFA'],
+                    borderWidth: 0
+                }];
+                textField.innerText = 'Strategic allocation of $100K+ monthly budget across high-impact channels to maximise reach and conversion.';
+            }
+            roiChart.update();
+        }
+
+        // 3. Radar Chart — values at 70, 80, 95
         const ctxSkills = document.getElementById('skillsChart').getContext('2d');
         new Chart(ctxSkills, {
             type: 'radar',
             data: {
-                labels: ['Strategy', 'Ads', 'Content', 'Analytics', 'Community', 'Tools'],
+                labels: ['Strategy', 'Analytics', 'Content', 'Paid Ads', 'Automation', 'Community'],
                 datasets: [{
-                    label: 'Skill Level',
-                    data: [95, 90, 85, 92, 95, 88],
-                    borderColor: '#ED8936',
-                    backgroundColor: 'rgba(237, 137, 54, 0.2)'
+                    label: 'Proficiency',
+                    data: [95, 80, 95, 80, 70, 95],
+                    fill: true,
+                    backgroundColor: 'rgba(249,115,22,0.15)',
+                    borderColor: '#F97316',
+                    pointBackgroundColor: '#F97316',
+                    pointBorderColor: '#0A0D14',
+                    pointHoverBackgroundColor: '#fff',
+                    pointRadius: 5
                 }]
             },
-            options: { maintainAspectRatio: false }
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                elements: { line: { borderWidth: 2.5 } },
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255,255,255,0.07)' },
+                        grid: { color: 'rgba(255,255,255,0.07)' },
+                        pointLabels: { font: { size: 11, family: 'Syne' }, color: '#7C85A2' },
+                        suggestedMin: 0,
+                        suggestedMax: 100,
+                        ticks: {
+                            display: true,
+                            stepSize: 20,
+                            color: '#4a5568',
+                            backdropColor: 'transparent',
+                            font: { size: 9 }
+                        }
+                    }
+                },
+                plugins: {
+                    legend: { display: false },
+                    tooltip: {
+                        backgroundColor: '#161B2E',
+                        borderColor: 'rgba(255,255,255,0.08)',
+                        borderWidth: 1
+                    }
+                }
+            }
+        });
+
+        // ── Scroll Reveal ─────────────────────────────────────────────────────
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+
+                    // Animate skill bars when visible
+                    entry.target.querySelectorAll('.skill-fill').forEach(fill => {
+                        fill.style.width = fill.dataset.pct + '%';
+                    });
+                    // Also if the element itself is a skill-fill parent
+                    const fill = entry.target.querySelector('.skill-fill');
+                    if (fill) fill.style.width = fill.dataset.pct + '%';
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Also trigger bars for already-visible elements on load
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.skill-fill').forEach(fill => {
+                const row = fill.closest('.reveal');
+                if (!row || row.classList.contains('visible')) {
+                    fill.style.width = fill.dataset.pct + '%';
+                }
+            });
         });
     </script>
 </body>
 </html>
-
-
-
